@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogLiteV2</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container">
+                <span class="navbar-brand">BlogLite App</span>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navmenu">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navmenu">
+                    <ul class="navbar-nav ms-auto">
+                        <li class="nav-item">
+                            <a class="nav-link" href="/login">Login</a>
+                        </li>
+                    </ul>
+                </div>
+
+            </div>
+        </nav>
+
+        <div class="container mt-3">
+            {% for message in get_flashed_messages() %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            {% endfor %}
+        </div>
+
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong">
+                        <div class="card-body p-5">
+
+                            <h2 class=" fw-bold mb-5 text-center">BlogLite Register</h2>
+
+                            <div class="form-outline mb-4">
+                                <input v-model="username" type="text" class="form-control form-control-lg"
+                                    placeholder="Username" name="username" required />
+                                <span
+                                    v-if="username.length>0 &&(username.includes(' ') || !username.match(/^[0-9a-zA-Z]+$/))"
+                                    class="mx-2 text-start text-danger">*Username should contain only alphabets and
+                                    numbers</span>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input v-model="email" type="email" class="form-control form-control-lg"
+                                    placeholder="email" name="email" required />
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <input v-model="password" type="password" class="form-control form-control-lg"
+                                    placeholder="Password" name="password" required />
+                                <span v-if="password.length!=0 &&(password.length<6||password.length>15)"
+                                    class="mx-2 text-start text-danger">*enter a valid password</span>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label for="formFileLg" class="form-label">Add Display Picture</label>
+                                <input class="form-control form-control-lg" name="file" type="file" ref="file"
+                                    @change="checking">
+                            </div>
+
+                            <button class="btn btn-primary btn-lg btn-block"
+                                :disabled="(username.length<3 || password.length<6 || password.length>15 || !file_present || username.includes(' ') || !username.match(/^[0-9a-zA-Z]+$/))"
+                                @click.once="register" type="submit">Register</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="/static/js/register.js"></script>
+
+</html>

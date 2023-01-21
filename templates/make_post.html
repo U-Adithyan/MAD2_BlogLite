@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BlogLiteV2</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+            <div class="container">
+                <span class="navbar-brand">BlogLite App</span>
+            </div>
+        </nav>
+        <div class="container py-5 h-100">
+            <div class="row d-flex justify-content-center align-items-center h-100">
+                <div class="col-12 col-md-8 col-lg-6 col-xl-5">
+                    <div class="card shadow-2-strong">
+                        <div class="card-body p-5">
+
+                            <h2 class=" fw-bold mb-5 text-center">New Post</h2>
+                          
+                            <div class="form-outline mb-4">
+                                <input v-model="title" type="text" class="form-control form-control-lg"
+                                    placeholder="Title" name="Title" required />
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <textarea v-model="caption" type="textarea" rows="3" class="form-control form-control-lg"
+                                    placeholder="Caption" name="Caption" required></textarea>
+                            </div>
+
+                            <div class="form-outline mb-4">
+                                <label for="file" class="form-label">Add Image</label>
+                                <input class="form-control form-control-lg" name="file" type="file" ref="file"
+                                    @change="checking">
+                            </div>
+
+                            <button class="btn btn-primary btn-lg btn-block" @click.once="post" 
+                              :disabled="!file_present || caption.length<2 || title.length<2" type="submit">Post</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script type="text/javascript" src="/static/js/make_post.js"></script>
+
+</html>
