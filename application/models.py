@@ -14,6 +14,7 @@ class User(db.Model,UserMixin):
   fs_uniquifier = db.Column(db.String(255),unique=True,nullable=False)
   active = db.Column(db.Boolean())
   dp_location = db.Column(db.String(255))
+  webhook = db.Column(db.Text)
   roles = db.relationship('Role',secondary=roles_users,backref=db.backref('user',lazy='dynamic'))
   posts = db.relationship('Post',backref=db.backref('user'),lazy="subquery")
   latest_post_id = db.Column(db.Integer,default=0)

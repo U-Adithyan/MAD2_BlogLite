@@ -16,7 +16,8 @@ const Post = Vue.component('blog_post',{
               <h4>{post.title}</h4>
               <div class="d-sm-flex ms-auto">
                 <h4 class="bi bi-pen" @click.once="update_post"></h4>
-                <h4 class="bi bi-trash mx-3" @click.once="delete_post"></h4>
+                <h4 class="bi bi-download mx-3" @click="download"></h4>
+                <h4 class="bi bi-trash" @click.once="delete_post"></h4>
               </div>
             </div>
             <div class="py-2">
@@ -55,6 +56,9 @@ const Post = Vue.component('blog_post',{
     update_post: async function(){
       sessionStorage.setItem("current_post",this.post.id)
       window.location = '/'+ this.post.username + '/post/' + this.post.id + '/update_post'
+    },
+    download: async function(){
+      window.location = '/'+ this.post.username + '/post/' + this.post.id + '/export'
     }
   }
 })
@@ -112,6 +116,9 @@ var app = new Vue({
       },
       make_post : function(){
         window.location = '/'+ this.username +'/make_blog'
+      },
+      download : function(){
+        window.location = '/'+ this.username +'/export'
       }
     }
 })

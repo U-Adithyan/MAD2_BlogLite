@@ -1,5 +1,5 @@
 import os
-from flask import Flask,request,jsonify,flash
+from flask import Flask,request,jsonify,flash,send_file
 from flask import render_template,redirect
 from werkzeug.utils import secure_filename
 from flask_security import auth_token_required
@@ -8,10 +8,23 @@ from datetime import datetime
 from application.database import *
 from application.models import *
 from application.data_access import *
+from application import tasks
 
 from time import perf_counter_ns
 
 basedir=os.path.abspath(os.path.dirname(__file__))
+
+@app.route('/<string:username>/export')
+def export_posts(username):
+  job = tasks.get_posts.apply_async(args=[username])
+  result = job.wait()
+  return send_file(result, download_name="post.csv")
+
+@app.route('/<string:username>/post/<int:post_id>/export')
+def export_post(username,post_id):
+  job = tasks.get_post.apply_async(args=[username,post_id])
+  result = job.wait()
+  return send_file(result, download_name="post.csv")
 
 @app.route('/authenticate')
 @auth_token_required
@@ -146,7 +159,7 @@ def get_profile(username):
   for p in my_posts:
     post_list.append({
       "id" : p.post_id,
-      "usernamget_all_users()": p.username,
+      "username": p.username,
       "title" : p.name,
       "caption" : p.caption,
       "image" : p.image
@@ -187,12 +200,14 @@ def unfollowing(user1,user2):
   db.session.commit()
   return jsonify({"response":"unfollowed"}),200
 
-@app.route('/user/<string:username>/add_dp',methods=["POST"])
+@app.route('/user/<string:username>/add_details',methods=["POST"])
 @auth_token_required
-def add_DP(username):
+def add_details(username):
   directory = username
   path = os.path.join(app.config['UPLOAD_FOLDER'], directory)
   os.mkdir(path)
+
+  webhook = request.form['webhook']
   
   file = request.files["file"]
   ext = file.filename.rsplit('.', 1)[1].lower()
@@ -202,8 +217,12 @@ def add_DP(username):
   location = "/static/Images/"+directory+"/"+filename
   current_user = User.query.filter_by(username=username).first()
   current_user.dp_location = location
+  current_user.webhook = webhook
+
+  print(webhook, location)
   db.session.commit()
   
+
   
   return jsonify({"response":"success"}),200
 

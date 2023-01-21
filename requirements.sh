@@ -1,4 +1,5 @@
 pip install flask
+pip install requests
 pip install flask_sqlalchemy
 pip install sqlalchemy
 pip install -U Flask-Security-Too

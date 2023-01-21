@@ -76,6 +76,11 @@
                             </div>
 
                             <div class="form-outline mb-4">
+                                <input v-model="webhook" type="text" class="form-control form-control-lg"
+                                    placeholder="webhook" name="webhook"/>
+                            </div>
+
+                            <div class="form-outline mb-4">
                                 <label for="formFileLg" class="form-label">Add Display Picture</label>
                                 <input class="form-control form-control-lg" name="file" type="file" ref="file"
                                     @change="checking">

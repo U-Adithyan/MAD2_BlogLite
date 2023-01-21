@@ -6,6 +6,7 @@ var app = new Vue({
             username: '',
             email: '',
             password: '',
+            webhook:'',
             file_present: false
         };
     },
@@ -52,7 +53,8 @@ var app = new Vue({
                 const input = document.getElementsByName("file")["0"].files
                 const formData = new FormData()
                 formData.append('file', input["0"])
-                const response = await fetch('/user/' + this.username + '/add_dp', {
+                formData.append('webhook', this.webhook)
+                const response = await fetch('/user/' + this.username + '/add_details', {
                     method: 'POST',
                     headers: {
                         'Authentication-Token': localStorage.getItem("auth_token")
