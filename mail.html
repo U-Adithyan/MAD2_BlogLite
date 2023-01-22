@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Monthly Engagement Report</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet"
+     integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD" crossorigin="anonymous">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg bg-dark navbar-dark">
+        <div class="container">
+            <span class="navbar-brand">BlogLite Engagement Report</span>
+        </div>  
+    </nav>
+    <div class="container">
+        <h1 class="my-3">Hi {{name}}</h1>
+        <div class="card">
+            <div class="p-3">
+                <h5>No of Blogs: {{blog_num}}</h5>
+                <h5>No of Followers: {{followers}}</h5>
+            </div>
+        </div>
+        {%if blogs.length != 0%}
+            <h4 class="my-3">Your Posts this Month:</h4>
+        {%endif%}
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Blog title</th>
+                    <th scope="col">Last Update Time</th>
+                </tr>
+            </thead>
+            <tbody>
+                {%for blog in blogs%}
+                    <tr>
+                        <th scope="row">{{loop.index}}</th>
+                        <td>{{blog.name}}</td>
+                        <td>{{blog.upload_date}}</td>
+                    </tr>
+                {%endfor%}
+            </tbody>
+        </table>
+    </div>
+</body>
+</html>

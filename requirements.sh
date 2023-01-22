@@ -1,3 +1,4 @@
+pip install jinja2
 pip install flask
 pip install requests
 pip install flask_sqlalchemy
